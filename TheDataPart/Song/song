@@ -1,0 +1,18 @@
+public class Song {
+    
+    private String theName;
+    private int theLength;
+    public Song(String name, int length)
+    {
+        this.theName = name;
+        this.theLength = length;
+    }
+    public String name()
+    {
+        return this.theName;
+    }
+    public int length()
+    {
+        return this.theLength;
+    }
+}
