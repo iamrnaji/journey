@@ -1,0 +1,21 @@
+public class Film {
+    private String name;
+    private int age;
+    
+    public Film(String filmName, int filmAgeRating)
+    {
+        this.age = filmAgeRating;
+        this.name = filmName;
+    }
+    public String name()
+    {
+        return this.name;
+        
+    }
+    public int ageRating()
+    {
+        return this.age;
+    }
+            
+                 
+}
