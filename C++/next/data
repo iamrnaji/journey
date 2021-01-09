@@ -1,0 +1,15 @@
+/*
+Rami Naji
+Homework 2: Prime Numbers
+Due Date: October 8
+Visual Studio 2019
+This program finds the prime numbers from 0 to x, x in this case being 2000. However, this program can take any number and find all of the prime numbers up to whatever
+number is programmed.
+*/
+#pragma once
+#include <iostream>
+using namespace std;
+
+const short MAX = 2001;
+
+void sieve(short array[], short size);
