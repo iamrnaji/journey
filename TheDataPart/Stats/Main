@@ -1,0 +1,37 @@
+
+import java.util.Scanner;
+
+public class MainProgram {
+
+    public static void main(String[] args) {
+        System.out.println("Enter numbers:");
+        Scanner input = new Scanner(System.in);
+        int num = 0;
+        Statistics bob = new Statistics();
+        Statistics joe = new Statistics();
+        Statistics bill = new Statistics();
+        while (num != -1)
+        {
+            num = input.nextInt();
+            if(num != -1)
+            {
+                
+                if (num % 2 == 0)
+                {
+                    joe.addNumber(num);
+                }
+                else
+                {
+                    bill.addNumber(num);
+                }
+                bob.addNumber(num);
+            }
+            
+        }
+        System.out.println("Sum: " + bob.sum());
+        System.out.println("Sum of even numbers: " + joe.sum());
+        System.out.println("Sum of odd numbers: " + bill.sum());
+        System.out.println(bob.average());
+        
+    }
+}
