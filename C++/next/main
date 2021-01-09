@@ -1,0 +1,66 @@
+/*
+Rami Naji
+Homework 2: Prime Numbers
+Due Date: October 8
+Visual Studio 2019
+This program finds the prime numbers from 0 to x, x in this case being 2000. However, this program can take any number and find all of the prime numbers up to whatever
+number is programmed.
+*/
+
+#include "global.h"
+
+        
+int main()
+{
+    short array[MAX];
+    short size = (sizeof(array) / sizeof(array[0]));
+
+
+    for (int x = 0; x < size; x++)
+    {
+        array[x] = x;
+    }
+
+
+    sieve(array, size);
+
+
+    system("pause");
+    return 0;
+}
+
+
+
+
+
+void sieve(short array[], short size)
+{
+    short w = 0;
+    for (int i = 2; i < size; i++)
+    {
+        for (int j = 1; j <= i; j++)
+        {
+            if (!(array[i] == j))
+            {
+                if (array[i] % j == 0)
+                {
+                    w++;
+                    if (w >= 2)
+                    {
+                        w = 0;
+                        break;
+                    }
+                }
+                
+            }
+            
+        }
+        if (w == 2 || w == 1)
+        {
+            cout << array[i] << endl;
+            w = 0;
+        }
+            
+        
+    }
+}
