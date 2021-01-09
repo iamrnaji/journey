@@ -1,0 +1,116 @@
+#include "gamer.h"
+
+void enter::fix()
+{
+    for (int i = 0; i < 132; i++)
+    {
+        input[i] = i;
+    }
+}
+
+void enter::InputData()
+{
+    cout << "Please enter a sentence: ";
+    cin.clear();
+    cin.ignore();
+    cin.getline(input, sizeof(input));
+    Char = cin.gcount() - 1;
+    cout << "You entered: " << input << endl;
+    cout << "Type any key to continue" << endl;
+    if (cin >> cont)
+    {
+        system("CLS");
+    }
+}
+
+void enter::Count(char var)
+{
+    short count = 0;
+    for (int i = 0; i < Char; i++)
+    {
+        if (var == input[i])
+        {
+            count++;
+        }
+    }
+    if (count != 0)
+    {
+        cout << var << " - " << count << endl;
+    }
+
+}
+
+void enter::CountAndDisplay()
+{
+    for (int i = 0; i < 128; i++)
+    {
+        test[i] = 0;
+    }
+    for (int i = 0; i < Char; i++)
+    {
+        test[input[i]]++;
+    }
+    for (int i = 48; i < 128; i++)
+    {
+        if (test[i] != 0)
+        {
+            cout << (char)i << " - " << test[i] << endl;
+        }
+    }
+    cout << "Type any key to continue" << endl;
+    if (cin >> cont)
+    {
+        system("CLS");
+    }
+}
+
+
+int main()
+{
+    short status;
+    status = 1;
+    enter theclass;
+    theclass.fix();
+
+
+    while (status == 1)
+    {
+        char input;
+        cout << "(E)nter the sentence to process" << endl;
+        cout << "(C)ount the letters and then display them" << endl;
+        cout << "(Q)uit the program" << endl;
+        cin >> input;
+
+
+        if (input == 'E' || input == 'e')
+        {
+            system("CLS");
+            theclass.InputData();
+        }
+        else if (input == 'C' || input == 'c')
+        {
+            system("CLS");
+            theclass.CountAndDisplay();
+        }
+        else if (input == 'Q' || input == 'q')
+        {
+            system("CLS");
+            status = 0;
+        }
+        else
+        {
+            system("CLS");
+            cout << "Illegal character entered" << endl;
+            system("pause");
+            system("CLS");
+        }
+    }
+
+
+    cout << "Program has quit" << endl;;
+    system("pause");
+    return 0;
+}
+
+
+
