@@ -1,0 +1,28 @@
+/*
+Name: Rami Naji
+Date Due: 7/17/20
+Compiler Used: Visual Studio 2019
+Program Disc: This program takes two user inputs, Distance traveled (dist) and Gallons Used (gals) and then uses those two values to find the miles per gallon (mpg) of the car
+the mpg is then displayed back to the user in user friendly text. 
+*/
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    double MPG = 0;
+    double dist = 0;
+    double gals = 0;
+
+    cout << "Please enter the distance traveled: ";
+    cin >> dist; 
+
+    cout << "Please enter the number of gallons used: ";
+    cin >> gals;
+
+    MPG = dist / gals; 
+    cout << "The miles per gallon of your car is: " << MPG << endl;
+
+    system("pause");
+    return 0;
+}
