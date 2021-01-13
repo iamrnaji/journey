@@ -1,0 +1,37 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+       
+
+        ArrayList<TelevisionProgram> programs = new ArrayList<>();
+        Scanner scanner = new Scanner(System.in);
+        int max = 0;
+        while(true)
+        {
+            System.out.println("Name: ");
+            String nam = scanner.nextLine();
+            if (nam.isEmpty())
+            {
+                break;
+            }
+            System.out.println("Duration: ");
+            int dur = Integer.valueOf(scanner.nextLine());
+            programs.add(new TelevisionProgram(nam, dur));
+        }
+        System.out.println("Program's maximum duration? ");
+        max = Integer.valueOf(scanner.nextLine());
+        
+        for(TelevisionProgram rami: programs)
+        {
+            if(rami.getDuration() <= max)
+            {
+                System.out.println(rami.getName() + ", " + rami.getDuration() + " minutes");
+            }
+        }
+        
+
+    }
+}
