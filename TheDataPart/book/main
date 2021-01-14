@@ -1,0 +1,43 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+        
+        ArrayList<Book> list = new ArrayList<>();
+        Scanner scanner = new Scanner(System.in);
+        while(true)
+        {
+            System.out.println("Title: ");
+            String title = scanner.nextLine();
+            if (title.isEmpty())
+            {
+                break;
+            }
+            System.out.println("Pages: ");
+            int pages = Integer.valueOf(scanner.nextLine());
+            System.out.println("Publication year: ");
+            int year = Integer.valueOf(scanner.nextLine());
+            list.add(new Book(title, pages, year));
+        }
+        System.out.println("What information will be printed? ");
+        String info = scanner.nextLine();
+        if (info.contains("everything"))
+        {
+            for(Book rami: list)
+            {
+                System.out.println(rami.toString());
+            }
+        }
+        else if (info.contains("name"))
+        {
+            for(Book rami: list)
+            {
+                System.out.println(rami.title());
+            }
+        }
+        
+
+    }
+}
