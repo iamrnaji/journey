@@ -1,0 +1,53 @@
+
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class SportStatistics {
+
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        int games = 0;
+        int wins = 0;
+        int loss = 0;
+        
+        System.out.println("File: ");
+        String file = scan.nextLine();
+        System.out.println("Team: ");
+        String team = scan.nextLine();
+        try(Scanner rami = new Scanner(Paths.get(file)))
+        {
+            while(rami.hasNextLine())
+            {
+                String row = rami.nextLine();
+                String ar[] = row.split(",");
+                String first = ar[0];
+                String second = ar[1];
+                int third = Integer.valueOf(ar[2]);
+                int fourth = Integer.valueOf(ar[3]);
+                if (first.contains(team) || second.contains(team))
+                {
+                    games++;
+                }
+                if((second.contains(team) && fourth > third) || (first.contains(team) && third > fourth))
+                {
+                    wins++;
+                }
+              
+                loss = games - wins;
+                
+              
+                
+            }
+            System.out.println("Games: " + games);
+            System.out.println("Wins: " + wins);
+            System.out.println("Losses: " + loss);
+        }
+        catch(Exception e)
+        {
+            System.out.println(e.getMessage());
+        }
+
+    }
+
+}
