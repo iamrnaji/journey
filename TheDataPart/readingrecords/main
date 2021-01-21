@@ -1,0 +1,31 @@
+
+import java.nio.file.Paths;
+import java.util.Scanner;
+
+public class RecordsFromAFile {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        System.out.println("Name of the file: ");
+        String name = scanner.nextLine();
+        try(Scanner file = new Scanner(Paths.get(name)))
+        {
+            while(file.hasNextLine())
+            {
+                String info = file.nextLine();
+                String[] names = info.split(",");
+                String first = names[0];
+                int second = Integer.valueOf(names[1]);
+                System.out.println(first + ", age: " + second + " years");
+            }
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+        }
+        
+        
+
+    }
+}
