@@ -1,0 +1,46 @@
+public class Timer {
+    
+    private int seconds;
+    private int mili;
+    
+    public Timer()
+    {
+        
+    }
+    
+    public void advance()
+    {
+        this.mili = this.mili + 1;
+        
+        if (this.mili > 99)
+        {
+            this.mili = 0;
+            this.seconds = this.seconds + 1;
+            if (this.seconds > 59)
+            {
+                this.seconds = 0;
+            }
+        }
+    }
+    
+    @Override
+    
+    public String toString()
+    {
+        if (this.seconds < 10)
+        {
+            if (this.mili < 10)
+        {
+            return "0" + this.seconds + ":0" + this.mili;
+        }
+            else
+            return "0" + this.seconds + ":" + this.mili;
+        }
+        
+        else 
+        {
+            return this.seconds + ":" + this.mili;
+        }
+    }
+    
+}
