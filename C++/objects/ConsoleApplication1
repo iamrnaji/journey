@@ -1,0 +1,128 @@
+#include <iostream>
+#include <cstring>
+#include "Header.h"
+using namespace std;
+
+
+CPerson::CPerson()
+{
+	m_name = nullptr;
+	m_age = 0;
+}
+
+CPerson::CPerson(const char *name, int age)
+{
+	m_name = new char[strlen(name) + 1];
+	strcpy(m_name, name);
+
+	m_age = age;
+}
+
+CPerson::CPerson(const CPerson &object)
+{
+	m_name = new char[strlen(object.m_name) + 1];
+	strcpy(m_name, object.m_name);
+
+	m_age = object.m_age;
+}
+
+CPerson::~CPerson()
+{
+	delete[] m_name;
+}
+
+int CPerson::GetAge() const
+{
+	return this->m_age;
+}
+
+const char* CPerson::GetName() const
+{
+	return this->m_name;
+}
+
+void CPerson::SetAge(int age)
+{
+	if (age < 0)
+	{
+		cout << "Age was negative, setting to zero\n";
+		m_age = 0;
+	}
+	else
+	{
+		m_age = age;
+	}
+}
+
+void CPerson::SetName(const char* name)
+{
+	delete[] m_name;
+	m_name = new char[strlen(name) + 1];
+	strcpy(m_name, name);
+}
+
+void CPerson::DisplayData()
+{
+	cout << this->m_name << " " << this->m_age << " years old" << endl;
+}
+
+void CPerson::GetData()
+{
+	cin >> this->m_age;
+}
+
+ostream& operator<<(ostream& outStream, const CPerson& object)
+{
+	outStream << "Name: ";
+	if (object.GetName() != nullptr)
+	{
+		outStream << object.GetName() << endl;
+	}
+	else
+	{
+		outStream << endl;
+	}
+
+	outStream << "Age: " << object.GetAge();
+
+	return outStream;
+	
+}
+
+istream& operator>>(istream& inStream, CPerson& object)
+{
+	char name[256];
+	int age;
+
+	inStream >> name >> age;
+
+	object.SetName(name);
+	object.SetAge(age);
+
+	return inStream;
+}
+
+bool CPerson::operator==(const CPerson& rhs)
+{
+	if (strcmp(m_name, rhs.m_name) == 0)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+
+bool CPerson::operator>(const CPerson& rhs)
+{
+	if (m_age > rhs.m_age)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
