@@ -1,0 +1,23 @@
+#include <iostream>
+#include "Header.h"
+using namespace std;
+
+
+int main()
+{
+	CPerson P1;
+
+	char name[] = "Elon Musk";
+	CPerson P2(name, 47);
+	CPerson P3(P2);
+
+	cout << P1 << endl;
+	cout << endl;
+	cout << P2;
+	cout << endl;
+	cout << P3;
+	cout << endl;
+	cout << "Enter name and age";
+	cin >> P1;
+
+}
