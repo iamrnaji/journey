@@ -1,0 +1,19 @@
+public class Rami {
+    private int rick = 0;
+    public Rami(int rick)
+    {
+        this.rick = rick;
+    }
+    
+    public int GetRami()
+    {
+        return this.rick;
+    }
+    
+    @Override
+    public String toString()
+    {
+        return "" + this.rick;
+    }
+    
+}
