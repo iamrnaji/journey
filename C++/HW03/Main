@@ -1,0 +1,53 @@
+
+// ============================================================================
+// file: HW03
+// ============================================================================
+// Programmer: Rami Naji
+// Date: 02/09/2021
+// Class: CSCI 133
+// Time: ONLINE
+// Instructor: Dr. Rodriguez
+// Project: Sum of Squares
+//
+// Description:
+//      This program takes the sum of all of the values squared leading up to
+//      the given integer and return the value of the sum.
+//      (for instance, when passed 2, it will return 4 + 1) 
+//
+// ============================================================================
+
+#include <iostream>
+using namespace std;
+
+// ==== sumOfSquares ==========================================================
+//
+// This function calculates the sum of all integers squared up to the passed 
+// value. 
+//
+// Input:
+//      value [IN]: a value that is the upper bound of the sum of the values 
+//      squared. 
+//
+// Output:
+//     The sum of all integers squared up to the passed value.
+//
+// ============================================================================
+
+int sumOfSquares(int value)
+{
+    
+    int sum = 0;
+
+    // base case
+    if (value == 1)
+    {
+        sum = 1;
+    }
+
+    else
+    {
+        //simplifying step
+        sum = (value * value) + sumOfSquares(value - 1);
+    }
+    return sum;
+} //emd pf "sumOfSquares"
