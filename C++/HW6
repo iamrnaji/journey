@@ -1,0 +1,88 @@
+#include <iostream>
+using namespace std;
+
+const int NUM_PATIENTS = 2;
+const int NUM_CLINICAL_DATA = 2;
+
+void DispPatientInfo(double *arrayPtr, int numData, string header[NUM_CLINICAL_DATA]);
+double AbnormalCategory(double data[][NUM_CLINICAL_DATA], int numOfPatients, double** arrayPtr, int catInterest, bool max);
+
+int main()
+{
+    double patientData[NUM_PATIENTS][NUM_CLINICAL_DATA] =
+    {
+        {1,2} , 
+        {3,4}
+    };
+
+    string heading[NUM_CLINICAL_DATA] =
+    {
+        "rami", "yes"
+    };
+    
+    double* arrayPtr;
+    double value;
+    bool max;
+    int catInterest;
+
+
+    catInterest = 0;
+    max = 1;
+
+    value = AbnormalCategory(patientData, NUM_PATIENTS, &arrayPtr, catInterest, max);
+
+
+
+    DispPatientInfo(arrayPtr, NUM_CLINICAL_DATA, heading);
+
+    
+}
+
+double AbnormalCategory(double data[][NUM_CLINICAL_DATA], int numOfPatients, double** arrayPtr, int catInterest, bool max)
+{
+    double holder = 0;
+    double bigHolder = 1000000;
+
+    if (max)
+    {
+        for (int i = 0; i < numOfPatients; i++)
+        {
+            if (data[i][catInterest] > holder)
+            {
+                holder = data[i][catInterest];
+                *arrayPtr = data[i];
+                
+                
+            }
+        }
+        return holder;
+    }
+    else
+    {
+        for (int i = 0; i < numOfPatients; i++)
+        {
+            if (data[i][catInterest] < bigHolder)
+            {
+                 bigHolder = data[i][catInterest];
+                 *arrayPtr = data[i];
+                    
+            }
+        }
+        return bigHolder;
+    } 
+}
+
+void DispPatientInfo(double* arrayPtr, int numData, string header[NUM_CLINICAL_DATA])
+{
+    for (int i = 0; i < numData; i++)
+    {
+        cout << header[i] << "\t";
+    }
+    cout << endl;
+    for (int i = 0; i < numData; i++)
+    {
+        cout << arrayPtr[i] << "\t";
+    }
+
+    cout << endl << endl;
+}
