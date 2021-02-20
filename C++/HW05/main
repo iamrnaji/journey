@@ -1,0 +1,38 @@
+#include <iostream>
+#include "clist.h"
+
+using namespace std;
+
+void DisplayList(const CList& list)
+{
+	int index;
+	ListItemType item;
+
+	for (index = 0; index < list.GetCurrentSize(); ++index)
+	{
+		list.GetItem(index, item);
+		cout << index << ":\t" << item << endl;
+	}
+}
+
+
+
+int main()
+{
+	CList list;
+
+	list.Add(3);
+	list.Add(4);
+	list.Add(5);
+	list.Add(6);
+	list.Add(7);
+	list.Add(8);
+
+	DisplayList(list);
+
+
+	
+}
+
+
+
