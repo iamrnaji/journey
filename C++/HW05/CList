@@ -1,0 +1,395 @@
+
+
+#include <iostream>
+#include "clist.h"
+using namespace std;
+
+CList::CList()  
+{
+	//assign variables
+	m_capacity = MAX_ITEMS;
+	m_numItems = 0;
+	m_items = new ListItemType[m_capacity];
+
+	//create our blank list
+	for (int i = 0; i < MAX_ITEMS; i++)
+	{
+		m_items[i] = 0;
+	}
+}
+
+
+CList::~CList()
+{
+	DestroyList();
+}
+
+bool CList::DestroyList() 
+{
+	//begin destruction of list
+	m_capacity = m_numItems = 0;
+	delete[] m_items;
+
+	//check if list was destroyed
+	if (m_capacity == m_numItems)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+bool CList::GetItem(int index, ListItemType& item) const
+{
+
+	//check if index is out of bounds
+	if (index < 0 || MAX_ITEMS < index)
+	{
+		return false;
+	}
+	else
+	{
+		
+		item = m_items[index];
+		
+	}
+
+	//check if program worked successfully 
+	if (m_items[index] == item)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+int CList::GetCapacity() const
+{
+	return m_capacity;
+}
+
+int CList::GetCurrentSize() const
+{
+	return m_numItems;
+}
+
+bool CList::Add(const ListItemType& newItem)
+{
+	//check if list is empty
+	if (m_numItems == 0)
+	{
+		m_items[0] = newItem;
+		m_numItems++;
+	}
+	else
+	{
+		//check if list is at max capacity
+		if (m_numItems == m_capacity)
+		{
+			//double capacity of list
+			SetCapacity(m_capacity * 2);
+			m_items[m_numItems ] = newItem;
+			m_numItems++;
+		}
+		else
+		{
+			//assign value
+			m_items[m_numItems] = newItem;
+			m_numItems++;
+		}
+	}
+
+	//check if process was completed successfully
+	if(m_items[m_numItems - 1] == newItem)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+
+}
+
+bool CList::IsEmpty() const
+{
+
+	//if there are no items on the list, it is empty
+	if (m_numItems == 0)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+bool CList::IsFull() const
+{
+
+	//if capacity is at max, it equals numItems
+	if (m_capacity == m_numItems)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+bool CList::Remove(const ListItemType& value)
+{
+	//declare checker for later
+	int check = 0;
+
+	//look for value given
+	for (int i = 0; i < m_numItems; i++)
+	{
+
+		//check if value is found
+		if (m_items[i] == value)
+		{
+			//check that this is the end of the list
+			if (&m_items[i] == &m_items[m_numItems - 1])
+			{
+				m_items[i] = 0;
+				m_numItems--;
+				return true;
+			}
+			else
+			{
+				m_items[i] = 0;
+				m_numItems--;
+				int holder = i + 1;
+				//not the end of the list, shift values over
+				for (int j = i; j < m_numItems; j++)
+				{
+					m_items[j] = m_items[holder];
+					holder++;
+				}
+				return true;
+			}
+
+		}
+		else
+		{
+			//increment by 1 each time value is not found
+			check++;
+		}
+
+	}
+	
+	//check success
+	if (check == m_numItems)
+	{
+		cout << "Value not found" << endl;
+		return false;
+	}
+	else
+	{
+		return true;
+	}
+}
+
+
+
+bool CList::SetCapacity(int num)
+{
+
+	//declare variables
+	ListItemType* newItems = new ListItemType[num];
+	int i;
+	int stopVal;
+	int sizeCounter = 0;
+
+	//check if new capacity is higher or lower
+	stopVal = (m_capacity > num) ? num : m_capacity;
+
+	for (i = 0; i < stopVal; ++i)
+	{
+		//check if empty
+		if (m_items[i] != 0)
+		{
+			//for use by m_numItems
+			++sizeCounter;
+		}
+		//copy
+		newItems[i] = m_items[i];
+
+	}
+
+	//set values to 0 if capacity is less than num
+	if (m_capacity < num)
+	{
+		for (i = stopVal; i < num; ++i)
+		{
+			newItems[i] = 0;
+		}
+	}
+
+	//delete old m_items and create new one
+	delete[] m_items;
+	m_capacity = num;
+	m_numItems = sizeCounter;
+	m_items = newItems;
+	
+
+	//check success
+	if (sizeof(m_items) == m_capacity - 1)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+
+}
+
+
+bool CList::Clear()
+{
+
+	//set vaues to 0
+	for (int i = 0; i < m_numItems; i++)
+	{
+		m_items[i] = 0;
+	}
+
+	
+	SetCapacity(MAX_ITEMS);
+
+	//check success
+	if (IsEmpty())
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+CList& CList::operator=(const CList& rhs)
+{
+
+	//make sure the objects are not the same
+	if (this != &rhs)
+	{
+		//begin copy process
+		delete[] m_items;
+		m_items = new ListItemType[rhs.m_capacity];
+
+
+		m_numItems = rhs.m_numItems;
+		m_capacity = rhs.m_capacity;
+
+		//copy values over
+		for (int i = 0; i < this->GetCurrentSize(); i++)
+		{
+			m_items[i] = rhs.m_items[i];
+		}
+	}
+
+	return *this;
+}
+
+bool CList::CloseItemGap(int index)
+{
+
+	//create a holder for the next value
+	int holder = index + 1;
+
+	//move items over
+	for (int j = index; j < m_numItems; j++)
+	{
+		m_items[j] = m_items[holder];
+		holder++;
+	}
+	m_numItems--;
+
+	//check success
+	if (m_items[index] != 0)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+int CList::CopyList(const CList& otherList)
+{
+
+	//makes sure list is empty
+	if (!(IsEmpty()))
+	{
+		delete[]  m_items;
+	}
+
+	int count = 0;
+
+	//begins copy process
+	m_items = new ListItemType[otherList.m_capacity];
+
+	m_capacity = otherList.m_capacity;
+	m_numItems = otherList.m_numItems;
+
+	//copy items over
+	for (int i = 0; i < m_capacity; i++)
+	{
+		m_items[i] = otherList.m_items[i];
+		count++;
+	}
+
+	//check success
+	if (count == m_capacity)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+
+bool CList::ItemExists(int& index, const ListItemType& item)
+{
+	int count = 0;
+
+	//makes sure list is not empty
+	if (IsEmpty())
+	{
+		return false;
+	}
+
+	//looks for item
+	for (int i = 0; i < m_numItems; i++)
+	{
+		if (m_items[i] == item)
+		{
+			//sets index to item #
+			index = m_items[i];
+			return true; 
+		}
+		count++;
+	}
+
+	//check success
+	if (count == m_numItems)
+	{
+		return false;
+	}
+	else
+	{
+		return true;
+	}
+}
