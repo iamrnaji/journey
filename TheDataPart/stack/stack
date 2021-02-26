@@ -1,0 +1,63 @@
+import java.util.ArrayList;
+
+public class Stack {
+    
+    private ArrayList<String> rami;
+    
+    
+    public Stack()
+    {
+        this.rami = new ArrayList<>();
+        
+    }
+    
+    
+    public boolean isEmpty()
+    {
+        if (this.rami.isEmpty())
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    
+    public void add(String value)
+    {
+        rami.add(value);
+       
+    }
+    
+    public ArrayList<String> values()
+    {
+        for(int i = this.rami.size() - 1; i >= 0; i--)
+        {
+            System.out.println("[" + this.rami.get(i) + "]");
+        }
+        
+        return this.rami;
+    }
+    
+    public String take()
+    {
+        String wanted; 
+        if(!(this.rami.size() == 1))
+        {
+            wanted = this.rami.get(this.rami.size() - 1);
+            this.rami.remove(this.rami.size() - 1);
+        }
+        
+        else
+            
+        {
+            wanted = this.rami.get(0);
+            this.rami.remove(0);
+        }
+        
+        
+        
+        return wanted;
+    }
+}
