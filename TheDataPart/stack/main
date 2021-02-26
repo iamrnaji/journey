@@ -1,0 +1,14 @@
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        Stack p = new Stack();
+p.add("36a8c9");
+p.add("70e28c");
+p.add("e2eddc");
+System.out.println(p.take());
+System.out.println(p.take());
+//System.out.println(p.take());
+    }
+}
