@@ -1,0 +1,315 @@
+// ============================================================================
+// file: main.cpp
+// ============================================================================
+// Programmer: Rami Naji
+// Date: 03/03/21
+// Class: CSCI 133
+// Time: ONLINE
+// Instructor: Dr. Rodriguez
+// Project: Stacks
+//
+// Description:
+//      This program takes a user inputted expression that consists of only
+//      integers, converts this expression from infix to postfix and then
+//      uses the postfix expression to determine the result of the expression.
+//
+// ============================================================================
+
+#include <iostream>
+#include <stack>
+#include <cmath>
+#include <cctype>
+#include <string>
+
+using namespace std;
+
+// ==== InfixToPostfix ========================================================
+//
+// This function converts a infix expression passed by main into a postfix
+// expression.
+//
+// Input:
+//      expression [IN]  -- a string value containing single integer numbers 
+//      and operators
+//
+// Output:
+//      A postfix string of the integers and operators
+//
+// ============================================================================
+
+string InfixToPostfix(string expression)
+{
+
+    //create our stack
+    stack<string> postStack;
+
+    //create our holders
+    string postfix = "";
+    string stringHolder = "";
+    
+    //as long as the expression given
+    for (int i = 0; i < expression.size(); i++)
+    {
+        char holder = expression.at(i);
+
+        
+
+        //If a number, append
+        if (holder > 47 && holder < 58)
+        {
+            stringHolder = holder;
+
+            postfix.append(stringHolder);
+            postfix.append(" ");
+            
+
+        }
+
+        //If a "(", put onto stack
+        else if (holder == 40)
+        {
+            stringHolder = holder;
+            postStack.push(stringHolder);
+            
+        }
+
+        //If a operator and stack empty, push onto stack
+        else if ((holder == 47 || holder == 45 || holder == 43 || holder == 42 || holder == 94) && postStack.empty())
+        {
+            stringHolder = holder;
+            postStack.push(stringHolder);
+            
+        }
+
+        
+        //if an operator and not empty, pop all w/ equal precedence and push
+        else if ((holder == 47 || holder == 45 || holder == 43 || holder == 42 || holder == 94) && !postStack.empty())
+        {
+            //if it is a + or -
+            if (holder == 43 || holder == 45)
+            {
+                while (!postStack.empty())
+                {
+                    if (postStack.top() == "+" || postStack.top() == "-" || postStack.top() == "*" || postStack.top() == "/" || postStack.top() == "^")
+                    {
+                            postfix.append(postStack.top());
+                            postfix.append(" ");
+                            postStack.pop();
+                    }
+                    else
+                    {
+                        break;
+                    }     
+                } 
+            }
+
+            //if it is a * or /
+            else if (holder == 42 || holder == 47)
+            {
+                
+                while (!postStack.empty())
+                {
+                    if (postStack.top() == "*" || postStack.top() == "/" || postStack.top() == "^")
+                    {
+                            postfix.append(postStack.top());
+                            postfix.append(" ");
+                            postStack.pop();
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }    
+            }
+
+            //if it is a ^
+            else if (holder == 94)
+            {  
+                while (!postStack.empty())
+                {
+                    if (postStack.top() == "^")
+                    {
+                            postfix.append(postStack.top());
+                            postfix.append(" ");
+                            postStack.pop();
+                    }
+                    else
+                    {
+                        break;
+                    }  
+                }   
+            }
+
+            //push to stack
+            stringHolder = holder;
+            postStack.push(stringHolder);
+        }
+
+        //if it is a closing paranthesis
+        else if (holder == 41)
+        {
+            while (!postStack.empty())
+            {
+                if (postStack.top() == "(")
+                {
+                    postStack.pop();
+                    break;
+                }
+                else
+                {
+                    postfix.append(postStack.top());
+                    postfix.append(" ");
+                    postStack.pop();
+                }
+            }
+        }
+    }
+
+    //append all leftover stack
+    while (!postStack.empty())
+    {
+        postfix.append(postStack.top());
+        postfix.append(" ");
+        postStack.pop();
+    }
+
+
+    return postfix;
+} //end of InfixToPostfix
+
+// ==== Evaluate ==============================================================
+//
+// This function takes a postfix expression and returns a double while
+// utilizing a stack to preform most of its operations. The double is 
+// the result of the evaluated expression.
+//
+// Input:
+//      postfix [IN]   -- the postfix expression used to evaluate a result
+//
+// Output:
+//      a double value
+//
+// ============================================================================
+
+double Evaluate(string postfix)
+{
+    //create our stack
+    stack<double> postStack;
+
+    // as long as the given expression
+    for (int i = 0; i < postfix.size(); i++)
+    {
+
+        //if the character is a digit, push to stack
+        if (isdigit(postfix.at(i)))
+        {
+            char holder = postfix.at(i);
+            double hold = double(holder);
+            hold = hold - 48;
+            postStack.push(hold);
+        }
+
+        //if the character is an operator, evaluate the top two values in the stack with operator
+        else if (postfix.at(i) == '+' || postfix.at(i) == '-' || postfix.at(i) == '*' || postfix.at(i) == '/' || postfix.at(i) == '^')
+        {
+            double v2 = 0;
+            double v1 = 0;
+            double result = 0;
+            v2 = postStack.top();
+            postStack.pop();
+            v1 = postStack.top();
+            postStack.pop();
+
+            //different cases of operators
+            switch (postfix.at(i))
+            {
+                case '+':
+                    result = v1 + v2;
+                    break;
+                case '-':
+                    result = v1 - v2;
+                    break;
+                case '*':
+                    result = v1 * v2;
+                    break;
+                case '/':
+                    result = v1 / v2;
+                    break;
+                case '^':
+                    result = pow(v1, v2);
+                    break;
+
+            }
+
+            //push the result onto the top of the stack
+            postStack.push(result);
+            
+        }
+    }
+
+    //the top value of the final stack is the result
+    return postStack.top();
+
+    
+} //end of Evaluate
+
+
+// ==== main ==================================================================
+//
+// ============================================================================
+
+int main()
+{
+
+    //initilize variables
+    char user = 'y';
+    string expression = "";
+    string postfix = "";
+    double ans = 0;
+
+    //initial prompt
+    cout << "Enter an infix expression to evaluate: ";
+
+    
+    while(user == 'y'|| user == 'Y')
+    {
+        //get the expression from user
+        getline(cin, expression);
+
+        cout << "Infix: " << expression << endl;
+
+        postfix = InfixToPostfix(expression);
+
+        cout << "Postfix: " << postfix << endl;
+
+        ans = Evaluate(postfix);
+
+        cout << "Ans: " << ans << endl;
+
+        cout << "Would you like to tray again (Y/N)?\n";
+        
+        cin >> user;
+
+        //check for continuity
+        if (user == 'n' || user == 'N')
+        {
+            break;
+        }
+        else
+        {
+            cout << "Enter an infix expression to evaluate: ";
+        }
+
+        //clear cin to allow while loop to function with getline
+        cin.clear();
+        cin.ignore();
+
+        
+    } 
+
+
+    return 0; 
+
+} //end of main
+
+
