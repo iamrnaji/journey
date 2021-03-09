@@ -1,0 +1,90 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/**
+ *
+ * @author spide
+ */
+
+import java.util.ArrayList;
+
+public class Room {
+    
+    private ArrayList<Person> rami;
+    
+    public Room()
+    {
+        this.rami = new ArrayList<>();
+    }
+    
+    public void add(Person person)
+    {
+        this.rami.add(person);
+    }
+    
+    public boolean isEmpty()
+    {
+        if(this.rami.isEmpty())
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    
+    public ArrayList<Person> getPersons()
+    {
+        return this.rami;
+    }
+    
+    public Person shortest()
+    {
+        if(this.rami.isEmpty())
+        {
+            return null;
+        }
+        int small = 10000;
+        int count = 0;
+        for (int i = 0; i < rami.size(); i++)
+        {
+            if(this.rami.get(i).getHeight() < small)
+            {
+                small = this.rami.get(i).getHeight();
+                count++;
+            }
+        }
+        
+        if(this.rami.size() == 1)
+        {
+            return this.rami.get(0);
+        }
+        
+        return this.rami.get(count - 1);
+    }
+    
+    public Person take()
+    {
+        if(this.rami.isEmpty())
+        {
+            return null;
+        }
+        
+        ArrayList<Person> holder = new ArrayList<>();
+        
+        holder.add(this.shortest());
+        
+        this.rami.remove(this.shortest());
+        
+        return holder.get(0);
+    }
+    
+}
+
+
+
+
