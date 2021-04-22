@@ -1,0 +1,23 @@
+
+import java.util.*;
+
+public class main {
+
+	public static void main(String[] args) {
+		
+		Scanner kbd = new Scanner(System.in);
+		Employee rami = new Employee();
+		
+		System.out.println("Please enter the First name");
+		rami.setfName(kbd.nextLine());
+		System.out.println("Please enter the Last name");
+		rami.setlName(kbd.nextLine());
+		System.out.println("Please enter the ID");
+		rami.setId(kbd.nextLine());
+		System.out.println("Please enter the Yearly Pay");
+		int pay = Integer.valueOf(kbd.nextLine());
+		rami.setYearPay(pay);
+
+	}
+
+}
